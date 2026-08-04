@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Sora:wght@100..800&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+   font-family: "Manrope", sans-serif; 
+}
+
+h1, h2, h3, h4{
+    font-family: "Sora", sans-serif;
+}
+
+:root {
+  /* Brand colors */
+  --color-red: #D91E1E;
+  --color-red-dark: #A81616;
+  --color-black: #1A1A1A;
+
+  /* Neutrals */
+  --color-slate: #2E2E2E;      /* body text */
+  --color-gray: #6B6B6B;       /* secondary text */
+  --color-light-gray: #F4F4F4; /* section bg */
+  --color-white: #FFFFFF;      /* base bg */
+
+  /* Optional accent */
+  --color-steel-blue: #3A5A78;
+
+  /* Typography */
+  --font-heading: 'Sora', sans-serif;
+  --font-body: 'Manrope', sans-serif;
+
+  /* Type scale */
+  --text-h1: clamp(2rem, 5vw + 1rem, 3rem);
+  --text-h2: 2.25rem;
+  --text-h3: 1.5rem;
+  --text-h4: 1.125rem;
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+}
