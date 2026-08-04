@@ -40,3 +40,48 @@ h1, h2, h3, h4{
   --text-body: 1rem;
   --text-small: 0.875rem;
 }
+
+.navigation{
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo img{
+    height: 70px;
+}
+.nav-links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    padding-right: 8px;
+}
+.nav-links a{
+    color: var(--color-red);
+    text-decoration: none;
+    font-size: var(--text-body);
+    opacity: 0.6;
+    position: relative;
+    transition: all 0.2s ease 0s;
+}
+.nav-links a:before{
+    content: '';
+    width: 0%;
+    height: 2px;
+    background-color: var(--color-red);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transition: all 0.2s ease;
+}
+.nav-links a:hover::before{
+    width: 100%;
+}
+.nav-links a:hover{
+    opacity: 1;
+}
+.responsive-button{
+    display: none;
+}
+
