@@ -18,21 +18,29 @@ closeButton.addEventListener("click", () => {
 
 //Swiper js
 const swiper = new Swiper('.swiper', {
-  slidesPerView: 1,
-  spaceBetween: 20,
   autoplay: {
     delay: 2000,
     disableOnInteraction: false,
     pauseOnMouseEnter: true
   },
+  spaceBetween: 20,
   loop: true,
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev"
-  },
+  observer: true,
+  observeParents: true,
   pagination: {
     el: ".swiper-pagination",
     clickable: true,
     dynamicBullets: true
+  },
+  breakpoints: {
+    0: {
+      slidesPerView: 1
+    },
+    768: {
+      slidesPerView: 1
+    },
+    1024: {
+      slidesPerView: 1
+    }
   }
 });
