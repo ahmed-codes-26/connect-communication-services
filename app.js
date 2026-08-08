@@ -3,26 +3,79 @@ let openButton = document.querySelector("#open");
 let navigationBar = document.querySelector(".nav-links");
 let closeButton = document.querySelector("#close");
 
-
-openButton.addEventListener('click', () => {
+if (openButton && navigationBar) {
+  openButton.addEventListener("click", () => {
     navigationBar.classList.add("open");
     if (typeof ScrollTrigger !== "undefined") {
-        setTimeout(() => ScrollTrigger.refresh(), 420);
+      setTimeout(() => ScrollTrigger.refresh(), 420);
     }
-});
+  });
+}
 
-navigationBar.addEventListener("click", () => {
+if (closeButton && navigationBar) {
+  closeButton.addEventListener("click", () => {
     navigationBar.classList.remove("open");
     if (typeof ScrollTrigger !== "undefined") {
-        setTimeout(() => ScrollTrigger.refresh(), 420);
+      setTimeout(() => ScrollTrigger.refresh(), 420);
     }
-});
+  });
+}
 
-closeButton.addEventListener("click", () => {
-    navigationBar.classList.remove("open");
-    if (typeof ScrollTrigger !== "undefined") {
+// Close mobile menu on backdrop/container tap (excluding anchor link clicks)
+if (navigationBar) {
+  navigationBar.addEventListener("click", (e) => {
+    if (e.target.tagName !== "A" && navigationBar.classList.contains("open")) {
+      navigationBar.classList.remove("open");
+      if (typeof ScrollTrigger !== "undefined") {
         setTimeout(() => ScrollTrigger.refresh(), 420);
+      }
     }
+  });
+}
+
+// Dedicated click handler for nav links to sequence mobile menu closing before smooth scrolling
+const pageNavLinks = document.querySelectorAll(".nav-links a[href*='#']");
+
+pageNavLinks.forEach((link) => {
+  link.addEventListener("click", (e) => {
+    const href = link.getAttribute("href");
+    if (!href || !href.includes("#")) return;
+
+    const hashIndex = href.indexOf("#");
+    const targetId = href.substring(hashIndex);
+    if (!targetId || targetId === "#") return;
+
+    const targetElement = document.querySelector(targetId);
+    // If target element is not on the current page, permit standard page navigation
+    if (!targetElement) return;
+
+    e.preventDefault();
+
+    const isMenuOpen = navigationBar && navigationBar.classList.contains("open");
+
+    const performScroll = () => {
+      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (history.pushState) {
+        history.pushState(null, "", targetId);
+      } else {
+        window.location.hash = targetId;
+      }
+    };
+
+    if (isMenuOpen) {
+      navigationBar.classList.remove("open");
+      // Wait 400ms for mobile drawer slide-away transition (0.4s ease-out) to finish before smooth scrolling
+      setTimeout(() => {
+        performScroll();
+        if (typeof ScrollTrigger !== "undefined") {
+          ScrollTrigger.refresh();
+        }
+      }, 400);
+    } else {
+      // Desktop or closed menu: scroll immediately with zero delay
+      performScroll();
+    }
+  });
 });
 
 //Swiper js
