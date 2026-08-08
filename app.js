@@ -34,13 +34,16 @@ const swiper = new Swiper('.swiper', {
   },
   breakpoints: {
     0: {
-      slidesPerView: 1
+      slidesPerView: 1,
+      spaceBetween: 16
     },
     768: {
-      slidesPerView: 1
+      slidesPerView: 2,
+      spaceBetween: 24
     },
     1024: {
-      slidesPerView: 1
+      slidesPerView: 3,
+      spaceBetween: 30
     }
   }
 });
