@@ -1,81 +1,76 @@
 //Navigation functionality
-let openButton = document.querySelector("#open");
-let navigationBar = document.querySelector(".nav-links");
-let closeButton = document.querySelector("#close");
+const openBtn = document.querySelector(".open-button") || document.querySelector("#open");
+const closeBtn = document.querySelector(".close-button") || document.querySelector("#close");
+const navigationBar = document.querySelector(".nav-links");
 
-if (openButton && navigationBar) {
-  openButton.addEventListener("click", () => {
+function toggleMenu(isOpen) {
+  if (!navigationBar) return;
+  if (isOpen) {
     navigationBar.classList.add("open");
-    if (typeof ScrollTrigger !== "undefined") {
-      setTimeout(() => ScrollTrigger.refresh(), 420);
-    }
-  });
-}
-
-if (closeButton && navigationBar) {
-  closeButton.addEventListener("click", () => {
+  } else {
     navigationBar.classList.remove("open");
-    if (typeof ScrollTrigger !== "undefined") {
-      setTimeout(() => ScrollTrigger.refresh(), 420);
-    }
+  }
+  if (typeof ScrollTrigger !== "undefined") {
+    setTimeout(() => ScrollTrigger.refresh(), 420);
+  }
+}
+
+if (openBtn) {
+  openBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleMenu(true);
   });
 }
 
-// Close mobile menu on backdrop/container tap (excluding anchor link clicks)
-if (navigationBar) {
-  navigationBar.addEventListener("click", (e) => {
-    if (e.target.tagName !== "A" && navigationBar.classList.contains("open")) {
-      navigationBar.classList.remove("open");
-      if (typeof ScrollTrigger !== "undefined") {
-        setTimeout(() => ScrollTrigger.refresh(), 420);
-      }
-    }
+if (closeBtn) {
+  closeBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleMenu(false);
   });
 }
 
-// Dedicated click handler for nav links to sequence mobile menu closing before smooth scrolling
-const pageNavLinks = document.querySelectorAll(".nav-links a[href*='#']");
+// Dedicated click handler for nav links
+const pageNavLinks = document.querySelectorAll(".nav-links a");
 
 pageNavLinks.forEach((link) => {
   link.addEventListener("click", (e) => {
     const href = link.getAttribute("href");
-    if (!href || !href.includes("#")) return;
+    if (!href) return;
 
-    const hashIndex = href.indexOf("#");
-    const targetId = href.substring(hashIndex);
-    if (!targetId || targetId === "#") return;
+    if (href.includes("#")) {
+      const hashIndex = href.indexOf("#");
+      const targetId = href.substring(hashIndex);
 
-    const targetElement = document.querySelector(targetId);
-    // If target element is not on the current page, permit standard page navigation
-    if (!targetElement) return;
+      if (targetId && targetId !== "#") {
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          e.preventDefault();
 
-    e.preventDefault();
+          // Close menu immediately so mobile UI responds instantly
+          toggleMenu(false);
 
-    const isMenuOpen = navigationBar && navigationBar.classList.contains("open");
+          // Scroll immediately to preserve user gesture context on mobile browsers
+          targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
 
-    const performScroll = () => {
-      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
-      if (history.pushState) {
-        history.pushState(null, "", targetId);
-      } else {
-        window.location.hash = targetId;
-      }
-    };
-
-    if (isMenuOpen) {
-      navigationBar.classList.remove("open");
-      // Wait 400ms for mobile drawer slide-away transition (0.4s ease-out) to finish before smooth scrolling
-      setTimeout(() => {
-        performScroll();
-        if (typeof ScrollTrigger !== "undefined") {
-          ScrollTrigger.refresh();
+          if (history.pushState) {
+            history.pushState(null, "", targetId);
+          }
+          return;
         }
-      }, 400);
-    } else {
-      // Desktop or closed menu: scroll immediately with zero delay
-      performScroll();
+      }
     }
+
+    toggleMenu(false);
   });
+});
+
+// Backdrop click handler to close menu when tapping outside .nav-links
+document.addEventListener("click", (e) => {
+  if (navigationBar && navigationBar.classList.contains("open")) {
+    if (!navigationBar.contains(e.target) && openBtn && !openBtn.contains(e.target)) {
+      toggleMenu(false);
+    }
+  }
 });
 
 //Swiper js
