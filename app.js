@@ -3,74 +3,105 @@ const openBtn = document.querySelector(".open-button") || document.querySelector
 const closeBtn = document.querySelector(".close-button") || document.querySelector("#close");
 const navigationBar = document.querySelector(".nav-links");
 
-function toggleMenu(isOpen) {
-  if (!navigationBar) return;
-  if (isOpen) {
+function openMenu() {
+    if (!navigationBar) return;
     navigationBar.classList.add("open");
-  } else {
+    if (typeof ScrollTrigger !== "undefined") {
+        setTimeout(() => ScrollTrigger.refresh(), 420);
+    }
+}
+
+function closeMenu() {
+    if (!navigationBar) return;
+    const wasOpen = navigationBar.classList.contains("open");
     navigationBar.classList.remove("open");
-  }
-  if (typeof ScrollTrigger !== "undefined") {
-    setTimeout(() => ScrollTrigger.refresh(), 420);
-  }
+    if (wasOpen && typeof ScrollTrigger !== "undefined") {
+        setTimeout(() => ScrollTrigger.refresh(), 420);
+    }
 }
 
 if (openBtn) {
-  openBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    toggleMenu(true);
-  });
+    openBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openMenu();
+    });
 }
 
 if (closeBtn) {
-  closeBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    toggleMenu(false);
-  });
+    closeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        closeMenu();
+    });
+}
+
+// Helper: get stable absolute top position of an element (immune to mid-scroll drift)
+function getOffsetTop(el) {
+    let top = 0;
+    while (el) {
+        top += el.offsetTop;
+        el = el.offsetParent;
+    }
+    return top;
 }
 
 // Dedicated click handler for nav links
 const pageNavLinks = document.querySelectorAll(".nav-links a");
 
 pageNavLinks.forEach((link) => {
-  link.addEventListener("click", (e) => {
-    const href = link.getAttribute("href");
-    if (!href) return;
+    link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        if (!href) return;
 
-    if (href.includes("#")) {
-      const hashIndex = href.indexOf("#");
-      const targetId = href.substring(hashIndex);
-
-      if (targetId && targetId !== "#") {
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-          e.preventDefault();
-
-          // Close menu immediately so mobile UI responds instantly
-          toggleMenu(false);
-
-          // Scroll immediately to preserve user gesture context on mobile browsers
-          targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
-
-          if (history.pushState) {
-            history.pushState(null, "", targetId);
-          }
-          return;
+        if (!href.includes("#")) {
+            closeMenu();
+            return;
         }
-      }
-    }
 
-    toggleMenu(false);
-  });
+        const hashPart = href.substring(href.indexOf("#"));
+        if (!hashPart || hashPart === "#") {
+            closeMenu();
+            return;
+        }
+
+        const target = document.querySelector(hashPart);
+        if (!target) {
+            closeMenu();
+            return;
+        }
+
+        e.preventDefault();
+
+        const wasMenuOpen = navigationBar && navigationBar.classList.contains("open");
+
+        // If mobile menu is open, close it INSTANTLY (skip transition) to avoid scroll race
+        if (wasMenuOpen) {
+            navigationBar.style.transition = "none";
+            navigationBar.classList.remove("open");
+            navigationBar.offsetHeight;
+            navigationBar.style.transition = "";
+        }
+
+        // Calculate absolute scroll position using offsetTop (stable regardless of current scroll)
+        const navEl = document.querySelector(".navigation");
+        const navHeight = navEl ? navEl.offsetHeight : 0;
+        const scrollTarget = getOffsetTop(target) - navHeight;
+
+        window.scrollTo({ top: scrollTarget, behavior: "smooth" });
+        history.replaceState(null, "", hashPart);
+
+        if (wasMenuOpen && typeof ScrollTrigger !== "undefined") {
+            setTimeout(() => ScrollTrigger.refresh(), 500);
+        }
+    });
 });
 
-// Backdrop click handler to close menu when tapping outside .nav-links
+// Close menu on outside click
 document.addEventListener("click", (e) => {
-  if (navigationBar && navigationBar.classList.contains("open")) {
-    if (!navigationBar.contains(e.target) && openBtn && !openBtn.contains(e.target)) {
-      toggleMenu(false);
+    if (navigationBar && navigationBar.classList.contains("open")) {
+        if (!navigationBar.contains(e.target) && openBtn && !openBtn.contains(e.target)) {
+            closeMenu();
+        }
     }
-  }
 });
 
 //Swiper js
