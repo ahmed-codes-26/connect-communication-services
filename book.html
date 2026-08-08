@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/logo.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="styles.css">
+    <title>Book Your Consultation - Connect Communication Services</title>
+</head>
+
+<body>
+    <div class="navigation">
+        <div class="logo">
+            <a href="index.html"><img src="images/logo.png" alt="Logo"></a>
+        </div>
+        <div class="nav-links">
+            <div class="close-button">
+                <svg id="close" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="24px">
+                    <path
+                        d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                </svg>
+            </div>
+            <a href="index.html#home">Home</a>
+            <a href="index.html#about">About us</a>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#portfolio">Portfolio</a>
+            <a href="index.html#testimonials">Testimonials</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+        <div class="open-button">
+            <svg id="open" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="24px">
+                <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+            </svg>
+        </div>
+    </div>
+
+    <div class="booking-section">
+        <div class="booking-header">
+            <h1 class="heading">Book Your Free Consultation</h1>
+            <p class="subtext">
+                Schedule a one-on-one session with our security infrastructure engineers. We'll evaluate your property, audit risk factors, and tailor an enterprise-grade solution.
+            </p>
+        </div>
+
+        <div class="booking-container">
+            <form id="booking-form" action="https://api.web3forms.com/submit" method="POST" class="booking-form" novalidate>
+                <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+                <input type="hidden" name="subject" value="New Consultation Booking">
+                <input type="checkbox" name="botcheck" style="display:none">
+
+                <div class="form-group">
+                    <label for="booking-name">Full Name *</label>
+                    <input type="text" id="booking-name" name="name" placeholder="John Doe" required>
+                    <span class="field-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="booking-email">Email Address *</label>
+                    <input type="email" id="booking-email" name="email" placeholder="john@example.com" required>
+                    <span class="field-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="booking-phone">Phone Number *</label>
+                    <input type="tel" id="booking-phone" name="phone" placeholder="+92 300 1234567" required>
+                    <span class="field-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="booking-service">Service Interested In *</label>
+                    <select id="booking-service" name="service" required>
+                        <option value="" disabled selected>Select a primary service...</option>
+                        <option value="CCTV Installation">CCTV Installation</option>
+                        <option value="Access Control Systems">Access Control Systems</option>
+                        <option value="Structured Networking">Structured Networking</option>
+                        <option value="Security System Maintenance">Security System Maintenance</option>
+                        <option value="Full Security Ecosystem Design">Full Security Ecosystem Design</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <span class="field-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="booking-date">Preferred Contact Date *</label>
+                    <input type="date" id="booking-date" name="preferred_date" required>
+                    <span class="field-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="booking-details">Additional Details</label>
+                    <textarea id="booking-details" name="details" placeholder="Describe your facility size, number of locations, or specific security goals..."></textarea>
+                    <span class="field-error"></span>
+                </div>
+
+                <div id="booking-status" class="form-status"></div>
+
+                <div class="action-button">
+                    <button type="submit">Confirm Consultation Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col footer-brand">
+                    <div class="logo">
+                        <a href="index.html#home"><img src="images/logo.png" alt="Logo"></a>
+                    </div>
+                    <p>
+                        Connect Communication Services is your trusted partner in security infrastructure, delivering professional CCTV, access control, and structured networking across Pakistan.
+                    </p>
+                    <div class="footer-socials">
+                        <a href="#" aria-label="LinkedIn">
+                            <svg viewBox="0 -960 960 960"><path d="M216-216h132v-396H216v396Zm66-450q28 0 46-18t18-46q0-28-18-46t-46-18q-28 0-46 18t-18 46q0 28 18 46t46 18Zm204 450h132v-210q0-50 21-77.5t63-27.5q42 0 57.5 26t15.5 79v210h132v-234q0-92-48.5-139T642-612q-61 0-96 35v-35H414v396Z"/></svg>
+                        </a>
+                        <a href="#" aria-label="Facebook">
+                            <svg viewBox="0 -960 960 960"><path d="M540-120v-300h100l16-120H540v-80q0-35 17-53.5t55-18.5h76v-108q-36-5-76-5-82 0-132 49.5T430-516v116H330v120h100v300h110Z"/></svg>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <svg viewBox="0 -960 960 960"><path d="M480-260q92 0 156-64t64-156q0-92-64-156t-156-64q-92 0-156 64t-64 156q0 92 64 156t156 64Zm0-72q-62 0-105-43t-43-105q0-62 43-105t105-43q62 0 105 43t43 105q0 62-43 105t-105 43Zm216-336q15 0 25.5-10.5T732-704q0-15-10.5-25.5T696-740q-15 0-25.5 10.5T660-704q0 15 10.5 25.5T696-668ZM480-120q-148 0-254-106T120-480q0-148 106-254t254-106q148 0 254 106t106 254q0 148-106 254T480-120Zm0-72q118 0 203-85t85-203q0-118-85-203t-203-85q-118 0-203 85t-85 203q0 118 85 203t203 85Z"/></svg>
+                        </a>
+                        <a href="#" aria-label="X (Twitter)">
+                            <svg viewBox="0 -960 960 960"><path d="M180-160l260-316-240-324h120l180 244 180-244h120L480-476l240 316H600L420-404 240-160H180Zm120-80h60l360-480h-60L300-240Z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="index.html#portfolio">Portfolio</a></li>
+                        <li><a href="index.html#testimonials">Testimonials</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Our Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html#services">CCTV Installation</a></li>
+                        <li><a href="index.html#services">Access Control Systems</a></li>
+                        <li><a href="index.html#services">Structured Networking</a></li>
+                        <li><a href="index.html#services">Security Maintenance</a></li>
+                        <li><a href="index.html#services">Full Ecosystem Design</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Get in Touch</h4>
+                    <div class="footer-contact-list">
+                        <div class="footer-contact-item">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            <span>Gulberg III, Lahore, Pakistan</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                            <span>+92 (042) 3578-9000</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            <span>info@connectcommunications.pk</span>
+                        </div>
+                    </div>
+                    <a href="book.html" class="footer-btn">Book a Consultation</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div>&copy; 2026 Connect Communication Services. All rights reserved.</div>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
