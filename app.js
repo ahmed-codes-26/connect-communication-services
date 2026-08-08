@@ -71,14 +71,13 @@ pageNavLinks.forEach((link) => {
 
         e.preventDefault();
 
-        const wasMenuOpen = navigationBar && navigationBar.classList.contains("open");
-
-        // If mobile menu is open, close it INSTANTLY (skip transition) to avoid scroll race
-        if (wasMenuOpen) {
-            navigationBar.style.transition = "none";
+        // Close menu normally — it's position:fixed so its slide animation
+        // is independent of the page scroll and won't interfere
+        if (navigationBar && navigationBar.classList.contains("open")) {
             navigationBar.classList.remove("open");
-            navigationBar.offsetHeight;
-            navigationBar.style.transition = "";
+            if (typeof ScrollTrigger !== "undefined") {
+                setTimeout(() => ScrollTrigger.refresh(), 1200);
+            }
         }
 
         // Calculate absolute scroll position using offsetTop (stable regardless of current scroll)
@@ -88,10 +87,6 @@ pageNavLinks.forEach((link) => {
 
         window.scrollTo({ top: scrollTarget, behavior: "smooth" });
         history.replaceState(null, "", hashPart);
-
-        if (wasMenuOpen && typeof ScrollTrigger !== "undefined") {
-            setTimeout(() => ScrollTrigger.refresh(), 500);
-        }
     });
 });
 
